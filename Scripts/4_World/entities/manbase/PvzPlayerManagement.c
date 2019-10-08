@@ -33,8 +33,15 @@ class PvzPlayerManagement
 	
 	void PvzPlayerManagement()
 	{		
-		GetRPCManager().SendRPC( "PvzMod2", "CopyTheVariables", null, true );
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(sendRpc, 500, flase); 	
+
+		//GetRPCManager().SendRPC( "PvzMod2", "CopyTheVariables", null, true );
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(ManageDynamicZone, 1000, true); 	
+	}
+	
+	void sendRpc()
+	{
+		GetRPCManager().SendRPC( "PvzMod2", "CopyTheVariables", null, true );
 	}
 	
 	void CopyTheVariables( CallType type, ref ParamsReadContext ctx, ref PlayerIdentity sender, ref Object target )
@@ -51,6 +58,9 @@ class PvzPlayerManagement
 			
 			timeMini = m_DynamicSpawnVariables.timeMini;
 			timeMaxi = m_DynamicSpawnVariables.timeMaxi;
+			
+			Print("timeMini : " + timeMini.ToString());
+			Print("timeMaxi : " + timeMini.ToString());
 		}
 	}
 	
@@ -68,7 +78,7 @@ class PvzPlayerManagement
 			bool endTimeReach = CheckEndTime();
 			
 			if (zoneChangeNeedNewTime || endTimeReach)
-				ChooseTime()
+				ChooseTime();
 			
 			if (endTimeReach) 
 				SpawnZombies();

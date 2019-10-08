@@ -12,7 +12,7 @@ class PvzMissionBase
 	
 	void OnTick(float timeslice)
 	{
-		if (init == false)
+		if (init == false) /// faire plutôt un call later
 		{
 			init = true;			
 			FillDynamicSpawnVariables();
